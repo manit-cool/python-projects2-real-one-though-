@@ -1,0 +1,62 @@
+import pgzrun
+import random
+import pygame
+WIDTH = 550
+HEIGHT=550
+
+sprite = Actor('character')
+sprite2 = Actor('blaster')
+enemy = Actor('bad')
+enemy.x = 300
+enemy.y = 250
+sprite.x = 275
+sprite.y = 275
+sprite2.x = 10
+sprite2.y = 10
+enemyspeed = 3
+lives = 10
+score = 0
+ground = Actor('background')
+bon = Rect((0,0),(550,550))
+timer = 0 
+def draw():
+    global lives,score
+    screen.clear()
+    ground.draw()
+    enemy.draw()
+    sprite.draw()
+    sprite2.draw()
+    screen.draw.rect(bon,"green")
+    if sprite2.colliderect(enemy):
+        enemy.x = random.randint(0,WIDTH)
+        enemy.y = random.randint(0,HEIGHT)
+        score +=1 
+        print("score:")
+        enemy.draw()
+    if sprite.colliderect(enemy):
+        enemy.draw()
+        lives -=1
+        print(lives)
+        enemy.x = random.randint(0,WIDTH)
+        enemy.y =random.randint(0, HEIGHT)
+def update(dt):
+    global timer,lives,score
+    timer += dt
+    if lives == 0:
+        exit()
+    if score == 100:
+        print("YOU WON!!!!")
+        exit()
+    if enemy.x <sprite.x:
+        enemy.x += enemyspeed
+    if enemy.x > sprite.x:
+        enemy.x -=enemyspeed
+    if enemy.y <sprite.y:
+        enemy.y += enemyspeed
+    if enemy.y> sprite.y:
+        enemy.y -=enemyspeed
+
+
+def on_mouse_move(pos):
+    sprite2.pos = pos
+pgzrun.go()
