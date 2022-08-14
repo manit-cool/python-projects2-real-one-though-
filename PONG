@@ -1,0 +1,30 @@
+import pgzrun
+WIDTH = 500
+HEIGHT = 500
+ball = Rect((0,0),(20,20))
+bat= Rect((200,480),(100,20))
+vx = 5
+vy = 2
+def draw():
+    screen.clear()
+    screen.draw.filled_rect(ball,"blue")
+    screen.draw.filled_rect(bat,"white")
+def update():
+    global vx,vy
+    ball.x += vx
+    ball.y += vy
+    if ball.right > WIDTH or ball.left < 0:
+        vx = -vx
+    if bat.colliderect(ball) or ball.top < 0:
+        vy = -vy
+    if ball.bottom > HEIGHT:
+        exit()
+    if(keyboard.right):
+        bat.x += 4
+    if(keyboard.left):
+        bat.x -= 4
+    if bat.x > WIDTH:
+        bat.x = 0
+    if bat.right == 0:
+        bat.left = WIDTH 
+pgzrun.go()
