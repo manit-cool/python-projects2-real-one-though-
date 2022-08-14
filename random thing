@@ -1,0 +1,59 @@
+import pgzrun
+import random
+WIDTH = 750
+HEIGHT = 770
+sprite = Actor('character')
+sprite.x = 0
+sprite.y = 0
+spritepos = (sprite.x,sprite.y)
+sky0 = Actor('background')
+powerup = Rect((250,250),(50,50))
+enemy = Rect((250,250),(50,50))
+
+score = 0
+def draw():
+    screen.clear()
+    sky0.draw()
+    screen.draw.filled_rect(powerup,"green")
+    screen.draw.filled_rect(enemy,"red")
+    sprite.draw()
+def update():
+    global sprite,score
+    if keyboard.right:
+        sprite.x += 7
+    elif keyboard.left:
+        sprite.x -= 7
+    elif keyboard.up:
+        sprite.y -=7
+    elif keyboard.down:
+        sprite.y += 7
+
+    if sprite.colliderect(powerup):
+        powerup.x = random.randint(0,WIDTH)
+        powerup.y = random.randint(0, HEIGHT)
+        score += 1
+        print("Score:",score)
+    if enemy.x < sprite.x:
+        enemy.x += 6
+    if enemy.x > sprite.x:
+        enemy.x -= 6
+    if enemy.y < sprite.y:
+        enemy.y += 6
+    if enemy.y > sprite.y:
+        enemy.y -= 6
+    if sprite.colliderect(enemy):
+        exit()
+def on_key_up(key):
+    if key == key.D:
+        sprite.x += 5
+    elif key == key.A:
+        sprite.x -= 5
+    elif key == key.W:
+        sprite.y -=5
+    elif key == key.S:
+        sprite.y += 5
+
+def on_mouse_move(pos):
+    sprite.pos = pos
+    sprite.pos = pos
+pgzrun.go()
