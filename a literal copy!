@@ -1,0 +1,44 @@
+import pygame
+pygame.init()
+win = pygame.display.set_mode((700,700))
+pygame.display.set_caption("let us see if you learned anything")
+sw =700
+x = 50
+y = 60
+width = 20
+height = 20
+vel = 10
+isj = False
+isjc = 10
+run = True
+while run:
+    pygame.time.delay(50)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and x > vel:
+        x -= vel
+    if keys[pygame.K_RIGHT] and x < sw- width - vel:
+        x += vel
+    if not(isj):
+        if keys[pygame.K_UP] and y > vel:
+            y -= vel
+        if keys[pygame.K_DOWN] and y < sw - height - vel :
+            y += vel
+        if  keys[pygame.K_SPACE]:
+            isj = True
+    else:
+        if isjc >= -10:
+            neg = 1
+            if isjc < 0:
+                neg = -1
+            y -= (isjc ** 2) *0.5*neg
+            isjc -= 1
+        else:
+            isj = False
+            isjc = 10
+    win.fill((0,0,0))
+    pygame.draw.rect(win,(250,200,210),(x,y,width,height))
+    pygame.display.update()
